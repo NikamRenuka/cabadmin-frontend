@@ -32,11 +32,11 @@ const Header = ({ title, subtitle, onLogout, onSearch, onNotificationsClick }) =
   };
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4 flex-shrink-0">
+    <header className="bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 sticky top-0 z-30 shadow-sm border-b border-gray-200 px-4 md:px-6 py-3 md:py-4 flex-shrink-0">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         {/* Title + Subtitle */}
         <div>
-          <h2 className="text-2xl font-bold text-gray-800">{title}</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-gray-800">{title}</h2>
           {subtitle && (
             <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
           )}
@@ -49,9 +49,9 @@ const Header = ({ title, subtitle, onLogout, onSearch, onNotificationsClick }) =
         </div>
 
         {/* Search + Actions */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center gap-3 md:gap-4">
           {/* Search */}
-          <div className="relative w-full md:w-64">
+          <div className="relative w-full min-w-0 md:w-64">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
@@ -73,13 +73,13 @@ const Header = ({ title, subtitle, onLogout, onSearch, onNotificationsClick }) =
           {/* User Dropdown */}
           <div className="relative" ref={dropdownRef}>
             <div
-              className="flex items-center space-x-3 bg-gray-50 rounded-lg px-3 py-2 hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+              className="flex items-center space-x-2 md:space-x-3 bg-gray-50 rounded-lg px-2 md:px-3 py-2 hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
               onClick={() => setDropdownOpen(!dropdownOpen)}
             >
               <div className="bg-black p-2 rounded-full">
                 <User className="w-4 h-4 text-white" />
               </div>
-              <div className="text-sm">
+              <div className="hidden sm:block text-sm">
                 <p className="font-medium text-gray-800">Admin</p>
                 <p className="text-gray-500">Owner</p>
               </div>

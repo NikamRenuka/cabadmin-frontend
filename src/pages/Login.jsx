@@ -41,14 +41,14 @@ const Login = ({ onLogin }) => {
       className="flex items-center justify-center min-h-screen bg-cover bg-center"
       style={{ backgroundImage: `url(${caab})` }}
     >
-      <div className="ml-auto mr-12 bg-white/60 p-8 rounded-2xl shadow-xl w-full max-w-md h-[500px] flex flex-col justify-center backdrop-blur-lg border border-gray-300">
+      <div className="mx-4 md:ml-auto md:mr-12 bg-white/70 p-6 md:p-8 rounded-2xl shadow-xl w-full max-w-md h-auto md:h-[500px] flex flex-col justify-center backdrop-blur-lg border border-gray-200 animate-scaleIn">
         
         {/* Icon above heading */}
         <div className="flex justify-center mb-3">
           <UserCog size={50} className="text-gray-800" />
         </div>
 
-        <h2 className="text-2xl font-extrabold text-center mb-6 text-gray-900 tracking-wide">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-center mb-6 text-gray-900 tracking-wide">
           Admin Login
         </h2>
 
@@ -68,7 +68,7 @@ const Login = ({ onLogin }) => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full px-4 py-2.5 border rounded-lg shadow-sm focus:ring focus:ring-gray-400 focus:outline-none bg-white/70"
+              className="mt-1 block w-full px-4 py-2.5 border rounded-lg shadow-sm focus:ring focus:ring-gray-400 focus:outline-none bg-white/80 placeholder:text-gray-500"
               placeholder="Enter your username"
               required
             />
@@ -83,7 +83,7 @@ const Login = ({ onLogin }) => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full px-4 py-2.5 border rounded-lg shadow-sm focus:ring focus:ring-gray-400 focus:outline-none bg-white/70"
+              className="mt-1 block w-full px-4 py-2.5 border rounded-lg shadow-sm focus:ring focus:ring-gray-400 focus:outline-none bg-white/80 placeholder:text-gray-500"
               placeholder="Enter your password"
               required
             />
@@ -92,7 +92,7 @@ const Login = ({ onLogin }) => {
           {/* Submit button */}
           <button
             type="submit"
-            className="w-full bg-black text-white py-2.5 px-4 rounded-lg shadow-md hover:bg-gray-800 transition duration-300 font-semibold tracking-wide"
+            className="w-full bg-black text-white py-3 px-4 rounded-lg shadow-md hover:bg-gray-800 active:scale-[0.99] transition duration-200 font-semibold tracking-wide"
           >
             Login
           </button>

@@ -53,7 +53,7 @@ const NotificationsPage = () => {
   });
 
   return (
-    <div className="flex-1 p-6 space-y-6 overflow-y-auto">
+    <div className="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto">
       {/* Filter Tabs */}
       <div className="flex gap-3">
         {["all", "unread", "read"].map((type) => (
@@ -82,7 +82,7 @@ const NotificationsPage = () => {
             <div
               key={n.id}
               onClick={() => markAsRead(n.id)}
-              className={`flex items-start px-6 py-4 cursor-pointer transition ${
+              className={`flex items-start px-4 md:px-6 py-4 cursor-pointer transition ${
                 n.read
                   ? "bg-gray-50 hover:bg-gray-100"
                   : "bg-blue-50 hover:bg-blue-100"

@@ -132,7 +132,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
   return (
     <div className="w-full space-y-6">
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="bg-gradient-to-r from-blue-400 to-blue-500 rounded-xl p-4 text-white shadow">
           <h3 className="text-sm font-medium opacity-90">Total Bookings</h3>
           <p className="text-2xl font-bold">{filteredBookings.length}</p>
@@ -151,8 +151,65 @@ const BookingsPage = ({ searchQuery = "" }) => {
         </div>
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden relative">
+      {/* Mobile Cards (show on small screens) */}
+      <div className="grid md:hidden grid-cols-1 gap-4">
+        {filteredBookings.map((b) => {
+          const fd = computeFareDetails(b);
+          return (
+            <div key={b._id} className="bg-white rounded-xl shadow p-4">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-base font-semibold text-gray-900">{b.customerName}</p>
+                  <p className="text-sm text-gray-500 flex items-center mt-1">
+                    <Phone className="w-4 h-4 mr-1" /> {b.phone}
+                  </p>
+                </div>
+                <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(b.status)}`}>{b.status}</span>
+              </div>
+              <div className="mt-3 border-l-4 border-blue-500 pl-3">
+                <div className="text-sm font-bold text-gray-900 flex items-center">
+                  <MapPin className="w-4 h-4 mr-2 text-blue-600" /> {b.pickup}
+                  <span className="mx-1">→</span>
+                  {b.drop}
+                </div>
+                <div className="text-xs text-gray-500 mt-1 flex items-center">
+                  <Clock className="w-3 h-3 mr-1" /> {b.bookingTime}
+                </div>
+                <span className="inline-block bg-blue-50 text-blue-700 text-xs font-medium px-2 py-0.5 rounded-full mt-2">
+                  {b.tripType} ({b.rideType || "Exclusive"})
+                </span>
+              </div>
+              <div className="mt-3">
+                <p className="text-sm text-gray-900 font-medium">{b.vehicleType}</p>
+                {b.rideType === 'Shared' ? (
+                  <div className="text-sm text-gray-700">
+                    <div>
+                      {formatRupee(fd.perSeat)} <span className="text-xs">per seat</span>
+                    </div>
+                    <div className="font-bold text-green-600">Total: {formatRupee(fd.total)}</div>
+                  </div>
+                ) : (
+                  <p className="text-lg font-bold text-green-600">{formatRupee(fd.total)}</p>
+                )}
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+                <button onClick={() => setSelectedCustomer(b)} className="text-sm text-blue-600 underline">View</button>
+                {b.status === 'Pending' ? (
+                  <div className="flex gap-2">
+                    <button onClick={() => setDriverModal(b)} className="px-3 py-1 bg-green-600 text-white text-xs rounded-lg">Allocate</button>
+                    <button onClick={() => handleStatusUpdate(b._id, 'Cancelled')} className="px-3 py-1 bg-red-600 text-white text-xs rounded-lg">Reject</button>
+                  </div>
+                ) : (
+                  b.driverName && <p className="text-xs text-gray-600">Driver: {b.driverName}</p>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Table (md and up) */}
+      <div className="hidden md:block bg-white rounded-xl shadow-lg overflow-hidden relative">
         <div className="px-6 py-4 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-gray-800">All Bookings</h3>
         </div>
@@ -161,19 +218,19 @@ const BookingsPage = ({ searchQuery = "" }) => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500">
                   Customer
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500">
                   Trip Details
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500">
                   Vehicle & Fare
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                <th className="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500">
                   Actions
                 </th>
               </tr>
@@ -187,7 +244,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
                     className="hover:bg-gray-50 transition-colors duration-200"
                   >
                     {/* Customer */}
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 md:px-6 py-4 whitespace-nowrap">
                       <p className="text-sm font-medium text-gray-900">
                         {b.customerName}
                       </p>
@@ -203,7 +260,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
                     </td>
 
                     {/* Trip */}
-                    <td className="px-6 py-4">
+                    <td className="px-4 md:px-6 py-4">
                       <div className="space-y-2 border-l-4 border-blue-500 pl-3">
                         <div className="flex items-center text-sm text-gray-900 font-bold">
                           <MapPin className="w-4 h-4 mr-2 text-blue-600" />
@@ -223,7 +280,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
                     </td>
 
                     {/* Fare */}
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 md:px-6 py-4 whitespace-nowrap">
                       <p className="text-sm font-medium text-gray-900">
                         {b.vehicleType}
                       </p>
@@ -248,7 +305,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
                     </td>
 
                     {/* Status */}
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 md:px-6 py-4 whitespace-nowrap">
                       <span
                         className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${getStatusColor(
                           b.status
@@ -272,7 +329,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
                     </td>
 
                     {/* Actions */}
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 md:px-6 py-4 whitespace-nowrap">
                       <div className="flex gap-2">
                         {b.status === "Pending" && (
                           <>
@@ -306,7 +363,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-gray-200 bg-opacity-70 flex justify-center items-center z-50"
+              className="fixed inset-0 bg-gray-200 bg-opacity-70 flex justify-center items-center z-50 p-4"
             >
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -366,7 +423,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-gray-200 bg-opacity-70 flex justify-center items-center z-50"
+              className="fixed inset-0 bg-gray-200 bg-opacity-70 flex justify-center items-center z-50 p-4"
             >
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}

@@ -18,7 +18,7 @@ const Sidebar = ({ currentPage, onPageChange, onLogout, onNotificationsClick }) 
   ];
 
   return (
-    <div className="bg-white shadow-xl h-screen w-64 fixed left-0 top-0 z-10 flex flex-col">
+    <div className="bg-white shadow-xl h-screen w-64 fixed left-0 top-0 z-50 flex flex-col transform md:translate-x-0">
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center space-x-3">
           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-lg">
@@ -55,7 +55,7 @@ const Sidebar = ({ currentPage, onPageChange, onLogout, onNotificationsClick }) 
         })}
       </nav>
 
-      <div className="p-6 border-t border-gray-200">
+      <div className="p-6 border-t border-gray-200 mt-auto">
         <button
           onClick={onLogout}
           className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-white font-medium bg-gradient-to-r from-blue-500 to-blue-600 hover:opacity-90 transition-all"

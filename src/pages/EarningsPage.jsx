@@ -56,9 +56,9 @@ const EarningsPage = () => {
   ];
 
   return (
-    <div className="p-6 w-full space-y-6">
+    <div className="p-4 md:p-6 w-full space-y-6">
       {/* Earnings Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {earningsCards.map((card, index) => {
           const Icon = card.icon;
           return (
@@ -85,7 +85,7 @@ const EarningsPage = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {statsCards.map((card, index) => {
           const Icon = card.icon;
           return (
@@ -171,7 +171,7 @@ const EarningsPage = () => {
       {/* Financial Summary */}
       <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 shadow-lg">
         <h3 className="text-xl font-semibold text-gray-800 mb-4">Financial Summary</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white rounded-lg p-4">
             <p className="text-sm text-gray-600">Gross Revenue</p>
             <p className="text-2xl font-bold text-green-600">
