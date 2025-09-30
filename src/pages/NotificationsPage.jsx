@@ -7,7 +7,7 @@ const NotificationsPage = () => {
 
   // Fetch notifications
   const fetchNotifications = () => {
-    fetch("http://localhost:5000/api/notifications")
+    fetch("https://cabadmin-backend.onrender.com/api/notifications")
       .then((res) => res.json())
       .then((data) => {
         const formatted = data.map((n) => ({
@@ -32,7 +32,7 @@ const NotificationsPage = () => {
   // Mark as read
   const markAsRead = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/notifications/${id}`, {
+      await fetch(`https://cabadmin-backend.onrender.com/api/notifications/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ read: true }),

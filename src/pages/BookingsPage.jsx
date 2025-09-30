@@ -37,7 +37,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/bookings");
+        const response = await axios.get("https://cabadmin-backend.onrender.com/api/bookings");
         setBookings(response.data);
       } catch (error) {
         console.error("Error fetching bookings:", error);
@@ -81,7 +81,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
         updateData.driverName = driverName;
       }
       
-      await axios.put(`http://localhost:5000/api/bookings/${bookingId}`, updateData);
+      await axios.put(`https://cabadmin-backend.onrender.com/api/bookings/${bookingId}`, updateData);
 
       setBookings((prev) =>
         prev.map((b) =>
