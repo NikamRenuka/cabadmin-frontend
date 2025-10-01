@@ -3,7 +3,7 @@ import caab from "../assets/caab.png"; // ✅ make sure file extension matches y
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserCog } from "lucide-react"; // ✅ import admin icon
-const API_URL = process.env.REACT_APP_Backend_URL || "http://localhost:5000";
+const API_URL = process.env.REACT_APP_Backend_URL || "https://cabadmin-backend.onrender.com";
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
