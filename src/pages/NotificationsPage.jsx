@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Bell, CheckCircle } from "lucide-react";
 
-const API_URL = process.env.REACT_APP_Backend_URL || "https://cabadmin-backend.onrender.com";
+const API_URL = process.env.REACT_APP_Backend_URL || "https://cabadmin-backend-production.up.railway.app";
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState([]);
   const [filter, setFilter] = useState("all");
