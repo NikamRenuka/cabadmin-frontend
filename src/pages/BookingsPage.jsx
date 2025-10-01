@@ -16,7 +16,7 @@ import {
   Pencil,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
+const API_URL = process.env.Backend_URL || "http://localhost:5000";
 const drivers = [
   { id: 1, name: "Ramesh" },
   { id: 2, name: "Suresh" },
@@ -37,7 +37,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await axios.get("https://cabadmin-backend.onrender.com/api/bookings");
+        const response = await axios.get(`${API_URL}/api/bookings`);
         setBookings(response.data);
       } catch (error) {
         console.error("Error fetching bookings:", error);
@@ -81,7 +81,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
         updateData.driverName = driverName;
       }
       
-      await axios.put(`https://cabadmin-backend.onrender.com/api/bookings/${bookingId}`, updateData);
+      await axios.put(`${API_URL}/api/bookings/${bookingId}`, updateData);
 
       setBookings((prev) =>
         prev.map((b) =>

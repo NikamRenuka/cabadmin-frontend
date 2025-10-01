@@ -3,6 +3,7 @@ import caab from "../assets/caab.png"; // ✅ make sure file extension matches y
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserCog } from "lucide-react"; // ✅ import admin icon
+const API_URL = process.env.Backend_URL || "http://localhost:5000";
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
@@ -15,7 +16,7 @@ const Login = ({ onLogin }) => {
     setError("");
 
     try {
-      const res = await fetch("https://cabadmin-backend.onrender.com/api/auth/login", {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

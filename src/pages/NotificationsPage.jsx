@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Bell, CheckCircle } from "lucide-react";
 
+const API_URL = process.env.Backend_URL || "http://localhost:5000";
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState([]);
   const [filter, setFilter] = useState("all");
 
   // Fetch notifications
   const fetchNotifications = () => {
-    fetch("https://cabadmin-backend.onrender.com/api/notifications")
+    fetch(`${API_URL}/api/notifications`)
       .then((res) => res.json())
       .then((data) => {
         const formatted = data.map((n) => ({
@@ -32,7 +33,7 @@ const NotificationsPage = () => {
   // Mark as read
   const markAsRead = async (id) => {
     try {
-      await fetch(`https://cabadmin-backend.onrender.com/api/notifications/${id}`, {
+      await fetch(`${API_URL}/api/notifications/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ read: true }),
