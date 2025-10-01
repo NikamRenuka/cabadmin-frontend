@@ -9,10 +9,11 @@ import {
   Settings,
   BusFront,
 } from "lucide-react";
+const API_URL = process.env.REACT_APP_Backend_URL || "https://cabadmin-backend-production.up.railway.app";
 
 // --- API Configuration ---
 // This is the correct relative path for the frontend to access the Express backend.
-const BASE_URL = "/api/rates"; 
+const BASE_URL = `${API_URL}/api/rates`;
 
 // Initial data for all rates - Used as a fallback if the server returns no rates.
 const initialRates = {
