@@ -156,7 +156,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
         {filteredBookings.map((b) => {
           const fd = computeFareDetails(b);
           return (
-            <div key={b._id} className="bg-white rounded-xl shadow p-4">
+            <div key={b.id} className="bg-white rounded-xl shadow p-4">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-base font-semibold text-gray-900">{b.customerName}</p>
@@ -240,7 +240,7 @@ const BookingsPage = ({ searchQuery = "" }) => {
                 const fd = computeFareDetails(b);
                 return (
                   <tr
-                    key={b._id}
+                    key={b.id}
                     className="hover:bg-gray-50 transition-colors duration-200"
                   >
                     {/* Customer */}

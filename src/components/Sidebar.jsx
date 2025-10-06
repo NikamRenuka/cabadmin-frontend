@@ -37,9 +37,14 @@ const Sidebar = ({ currentPage, onPageChange, onLogout, onNotificationsClick }) 
           return (
             <button
               key={item.id}
-              onClick={() =>
-                item.id === 'notifications' ? onNotificationsClick() : onPageChange(item.id)
-              }
+              onClick={() => {
+                if (item.id === 'notifications') {
+                  onNotificationsClick();
+                  onPageChange('notifications'); // ✅ ensures sidebar closes
+                } else {
+                  onPageChange(item.id);
+                }
+              }}
               className={`w-full flex items-center space-x-3 px-6 py-4 text-left transition-all duration-200 hover:bg-blue-50 ${
                 isActive
                   ? 'bg-gradient-to-r from-blue-50 to-indigo-50 border-r-4 border-blue-600 text-blue-700'
