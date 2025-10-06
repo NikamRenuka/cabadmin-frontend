@@ -35,7 +35,7 @@ function App() {
   const renderCurrentPage = () => {
     switch (currentPage) {
       case "bookings":
-        return <BookingsPage searchQuery={searchQuery} />;
+        return <BookingsPage searchQuery={searchQuery} />; // instant search
       case "earnings":
         return <EarningsPage />;
       case "rates":
@@ -53,14 +53,14 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setCurrentPage("bookings");
+    setSearchQuery("");
   };
 
-  const handleSearch = (query) => setSearchQuery(query);
   const handleNotificationsClick = () => setCurrentPage("notifications");
 
   const DashboardLayout = () => (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar (desktop) */}
+      {/* Sidebar */}
       <div className="hidden md:block">
         <Sidebar
           currentPage={currentPage}
@@ -92,7 +92,6 @@ function App() {
         </div>
       )}
 
-      {/* Main content */}
       <div className="flex-1 flex flex-col md:ml-64">
         <Header
           title={getPageTitle(currentPage)}
@@ -104,11 +103,12 @@ function App() {
               : undefined
           }
           onLogout={handleLogout}
-          onSearch={handleSearch}
+          currentPage={currentPage}
+          searchQuery={searchQuery}
+          onSearch={setSearchQuery}
           onNotificationsClick={handleNotificationsClick}
         />
 
-        {/* Mobile menu button */}
         <button
           className="md:hidden m-4 p-2 rounded bg-blue-600 text-white w-fit"
           onClick={() => setSidebarOpen(true)}
@@ -117,7 +117,22 @@ function App() {
         </button>
 
         <main className="transition-all duration-300 p-6">
-          {renderCurrentPage()}
+          {(() => {
+            switch (currentPage) {
+              case "bookings":
+                return <BookingsPage searchQuery={searchQuery} />;
+              case "earnings":
+                return <EarningsPage />;
+              case "rates":
+                return <RatesPage />;
+              case "notifications":
+                return <NotificationsPage searchQuery={searchQuery} />;
+              case "payments":
+                return <PaymentsPage searchQuery={searchQuery} />;
+              default:
+                return <BookingsPage searchQuery={searchQuery} />;
+            }
+          })()}
         </main>
       </div>
     </div>
@@ -125,16 +140,11 @@ function App() {
 
   return (
     <Routes>
-      {/* Public routes */}
       <Route path="/login" element={<Login onLogin={handleLogin} />} />
-
-      {/* Private route */}
       <Route
         path="/dashboard"
         element={isLoggedIn ? <DashboardLayout /> : <Navigate to="/login" />}
       />
-
-      {/* Default redirect */}
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );

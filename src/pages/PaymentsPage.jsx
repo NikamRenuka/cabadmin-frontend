@@ -1,12 +1,23 @@
 // PaymentsPage.jsx
 
-import React from "react";
+import React, { useMemo } from "react";
 
-const PaymentsPage = () => {
+const PaymentsPage = ({ searchQuery = "" }) => {
   const payments = [
     { id: 1, customer: "Priya Sharma", amount: 4500, date: "2025-09-15" },
     { id: 2, customer: "Amit Patel", amount: 5500, date: "2025-09-14" },
   ];
+
+  const filtered = useMemo(() => {
+    const q = (searchQuery || "").toLowerCase();
+    if (!q) return payments;
+    return payments.filter(
+      (p) =>
+        String(p.id).includes(q) ||
+        p.customer.toLowerCase().includes(q) ||
+        p.date.toLowerCase().includes(q)
+    );
+  }, [searchQuery, payments]);
 
   return (
     <div className="p-4 md:p-6">
@@ -31,7 +42,7 @@ const PaymentsPage = () => {
             </tr>
           </thead>
           <tbody>
-            {payments.map((payment, index) => (
+            {filtered.map((payment, index) => (
               <tr
                 key={payment.id}
                 className={`${

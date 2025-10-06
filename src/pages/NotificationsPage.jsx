@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Bell, CheckCircle } from "lucide-react";
 
 const API_URL =
   import.meta.env.REACT_APP_Backend_URL ||
   "https://cabadmin-backend-production.up.railway.app";
 
-const NotificationsPage = () => {
+const NotificationsPage = ({ searchQuery = "" }) => {
   const [notifications, setNotifications] = useState([]);
   const [filter, setFilter] = useState("all");
 
@@ -51,12 +51,17 @@ const NotificationsPage = () => {
     }
   };
 
-  // Apply filter
-  const filteredNotifications = notifications.filter((n) => {
-    if (filter === "unread") return !n.read;
-    if (filter === "read") return n.read;
-    return true;
-  });
+  // Apply filter + search
+  const filteredNotifications = useMemo(() => {
+    const base = notifications.filter((n) => {
+      if (filter === "unread") return !n.read;
+      if (filter === "read") return n.read;
+      return true;
+    });
+    const q = (searchQuery || "").toLowerCase();
+    if (!q) return base;
+    return base.filter((n) => n.message.toLowerCase().includes(q) || n.date.toLowerCase().includes(q));
+  }, [notifications, filter, searchQuery]);
 
   return (
     <div className="flex-1 p-4 md:p-6 space-y-6 overflow-y-auto">
