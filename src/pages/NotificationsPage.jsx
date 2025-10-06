@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Bell, CheckCircle } from "lucide-react";
 
-const API_URL = import.meta.env.REACT_APP_Backend_URL || "https://cabadmin-backend-production.up.railway.app";
+const API_URL =
+  import.meta.env.REACT_APP_Backend_URL ||
+  "https://cabadmin-backend-production.up.railway.app";
+
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState([]);
   const [filter, setFilter] = useState("all");
@@ -30,14 +33,16 @@ const NotificationsPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Mark as read
+  // ✅ Corrected API call: /api/notifications/:id/read
   const markAsRead = async (id) => {
     try {
-      await fetch(`${API_URL}/api/notifications/${id}`, {
+      await fetch(`${API_URL}/api/notifications/${id}/read`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ read: true }),
       });
+
+      // ✅ Update state instantly
       setNotifications((prev) =>
         prev.map((n) => (n.id === id ? { ...n, read: true } : n))
       );
@@ -83,7 +88,7 @@ const NotificationsPage = () => {
             <div
               key={n.id}
               onClick={() => markAsRead(n.id)}
-              className={`flex items-start px-4 md:px-6 py-4 cursor-pointer transition ${
+              className={`flex items-start px-4 md:px-6 py-4 cursor-pointer transition-all duration-200 ${
                 n.read
                   ? "bg-gray-50 hover:bg-gray-100"
                   : "bg-blue-50 hover:bg-blue-100"
