@@ -9,7 +9,7 @@ import {
   Settings,
   BusFront,
 } from "lucide-react";
-const API_URL = process.env.REACT_APP_Backend_URL || "https://cabadmin-backend-production.up.railway.app";
+const API_URL = import.meta.env.REACT_APP_Backend_URL || "https://cabadmin-backend-production.up.railway.app";
 
 // --- API Configuration ---
 // This is the correct relative path for the frontend to access the Express backend.

@@ -16,7 +16,7 @@ import {
   Pencil,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-const API_URL = process.env.REACT_APP_Backend_URL || "https://cabadmin-backend-production.up.railway.app";
+const API_URL = import.meta.env.REACT_APP_Backend_URL || "https://cabadmin-backend-production.up.railway.app";
 const drivers = [
   { id: 1, name: "Ramesh" },
   { id: 2, name: "Suresh" },
